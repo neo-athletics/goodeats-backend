@@ -15,13 +15,13 @@ let yelpREST = axios.create({
     baseURL: "https://api.yelp.com/v3/",
     headers: {
         Authorization: `Bearer ${API_KEY}`,
-        origin: "localhost",
         "Content-type": "application/json",
     },
 });
 
 app.get("/", async (req, res) => {
     const { term, location, sort_by } = req.query;
+    console.log(term, location, sort_by, "results");
     try {
         await yelpREST("/businesses/search", {
             params: {
@@ -31,6 +31,7 @@ app.get("/", async (req, res) => {
                 limit: 20,
             },
         }).then(({ data }) => {
+            console.log(data);
             res.send(data);
         });
     } catch (err) {
